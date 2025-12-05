@@ -29,24 +29,29 @@ Otomasi Industri**.
 
 ## 🚀 Fitur Utama
 
-Sistem ini menerapkan prinsip **Distributed Control System (DCS)**
-sederhana dengan fitur:
 
-1.  **Level Control (LIC-101):**
-    -   Mengisi air otomatis saat level rendah (\< 20%).
-    -   Berhenti otomatis saat level penuh (\> 80%) menggunakan logika
-        *Hysteresis* untuk mencegah *chattering* pada pompa.
-2.  **Pressure Relief (PIC-101):**
-    -   Sistem proteksi tekanan berlebih. Katup servo akan terbuka
-        otomatis (Venting) jika tekanan tangki \> 80%.
-3.  **Safety Interlock & Alarm (TIC-101 & PAH-101):**
-    -   Sistem keamanan prioritas tinggi. Alarm (Buzzer & LED) akan
-        aktif jika:
-        -   Suhu cairan \> 40°C (Overheat).
-        -   **ATAU** Tekanan \> 80% (Overpressure).
-4.  **Real-time Monitoring:**
-    -   Menampilkan data Suhu, Level, dan Tekanan secara *real-time*
-        pada LCD 16x2.
+Sistem ini menerapkan prinsip **Distributed Control System (DCS)** sederhana dengan integrasi hardware dan logika sebagai berikut:
+
+1.  **Level Control (LIC-101)**
+    * **Sensor:** Ultrasonic HC-SR04.
+    * **Aktuator:** Pompa Air (Motor DC 5V).
+    * **Fungsi:** Mengontrol pengisian tangki secara otomatis menggunakan logika *Hysteresis* (ON saat < 20%, OFF saat > 80%) untuk mencegah osilasi pompa (*chattering*).
+
+2.  **Pressure Relief Control (PIC-101)**
+    * **Sensor:** Potensiometer 10kΩ (Simulasi Pressure Transducer).
+    * **Aktuator:** Micro Servo SG90 (Control Valve).
+    * **Fungsi:** Proteksi tekanan berlebih (*Safety Valve*). Katup servo akan membuka otomatis ke 90° (*Venting*) jika tekanan terdeteksi melebihi batas aman (> 80%).
+
+3.  **Temperature & Safety Interlock (TIC-101 & AH-101)**
+    * **Sensor:** Analog TMP36.
+    * **Indikator:** Piezo Buzzer & LED Merah.
+    * **Fungsi:** Sistem pemantauan suhu dan alarm prioritas tinggi. Alarm akan aktif (Bunyi + Kedip) jika terjadi kondisi abnormal:
+        * **Overheat:** Suhu cairan > 40°C.
+        * **Overpressure:** Tekanan tangki > 80% (Redundansi keamanan dari PIC).
+
+4.  **Real-time Human Machine Interface (HMI)**
+    * **Display:** LCD 16x2 dengan modul I2C.
+    * **Fungsi:** Menampilkan nilai aktual (PV - *Process Variable*) dari Level (%), Suhu (°C), dan Tekanan (%) secara *real-time* kepada operator.
 
 ------------------------------------------------------------------------
 
